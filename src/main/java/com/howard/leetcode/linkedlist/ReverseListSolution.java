@@ -40,11 +40,11 @@ public class ReverseListSolution {
      * @return
      */
     public ListNode reverseListRecurisve(ListNode head) {
-        return recurisve(head, null);
+        return helper(head, null);
     }
 
-    private ListNode recurisve(ListNode curr, ListNode prev) {
-        // 基线条年
+    private ListNode helper(ListNode curr, ListNode prev) {
+        // 基线条件
         if (curr == null) {
             return prev;
         }
@@ -52,6 +52,6 @@ public class ReverseListSolution {
         curr.next = prev;
         prev = curr;
         curr = next;
-        return recurisve(curr, prev);
+        return helper(curr, prev);
     }
 }

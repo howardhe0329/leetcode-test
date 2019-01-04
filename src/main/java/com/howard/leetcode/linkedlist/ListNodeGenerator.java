@@ -11,16 +11,24 @@ import java.util.List;
 public class ListNodeGenerator {
 
     public static ListNode generate(List<Integer> data) {
+        return generateCycle(data, -1);
+    }
+
+    public static ListNode generateCycle(List<Integer> data, int pos) {
         if (data == null || data.isEmpty()) {
             return null;
         }
         ListNode head = new ListNode(data.get(0));
         ListNode curr = head;
+        ListNode cycle = null;
         for (int i = 1; i < data.size(); i++) {
-            ListNode next = new ListNode(data.get(i));
-            curr.next = next;
-            curr = next;
+            if (pos == i - 1) {
+                cycle = curr;
+            }
+            curr.next = new ListNode(data.get(i));
+            curr = curr.next;
         }
+        curr.next = cycle;
         return head;
     }
 

@@ -1,6 +1,7 @@
 package com.howard.leetcode.linkedlist;
 
 import org.assertj.core.api.Assertions;
+import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -8,6 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 @DisplayName("测试链表是否有环")
@@ -24,63 +26,22 @@ class HasCycleSolutionTest {
     void tearDown() {
     }
 
-    @ParameterizedTest(name = "hasCycle测试有环的链表返回true: Test# {index}: Id: {0}")
+    @ParameterizedTest(name = "hasCycle测试有环的链表返回 {2}: Test# {index}: Id: {0}")
     @MethodSource("listNode")
-    @DisplayName("链表有环")
-    public void hasCycle(ListNode head) {
-        boolean result = solution.hasCycle(head);
-        Assertions.assertThat(result).as("有环的链表").isTrue();
-    }
-
-    @ParameterizedTest(name = "no_hasCycle测试无环的链表返回false: Test# {index}: Id: {0}")
-    @MethodSource("noCycleListNode")
-    @DisplayName("测试无环的链表")
-    public void no_hasCycle(ListNode head) {
-        boolean result = solution.hasCycle(head);
-        Assertions.assertThat(result).as("无环的链表").isFalse();
-    }
-
-    static Stream<Arguments> noCycleListNode() {
-        return Stream.of(
-                Arguments.arguments(createNoCycleListNode()),
-                Arguments.arguments(createNoCycleListNodeForNull())
-        );
+    @DisplayName("链表是否有环")
+    public void hasCycle(List<Integer> data, int pos, boolean right) {
+        boolean result = solution.hasCycle(ListNodeGenerator.generateCycle(data, pos));
+        Assertions.assertThat(result).as("有环的链表").isEqualTo(right);
     }
 
     static Stream<Arguments> listNode() {
         return Stream.of(
-                Arguments.arguments(createOne()),
-                Arguments.arguments(createTwo())
+                Arguments.arguments(Lists.newArrayList(3, 2, 0, -4), 1, true),
+                Arguments.arguments(Lists.newArrayList(1, 2), 0, true),
+                Arguments.arguments(Lists.newArrayList(1), -1, false),
+                Arguments.arguments(Lists.newArrayList(1), 0, false),
+                Arguments.arguments(Lists.newArrayList(), 0, false)
         );
-    }
-
-    static ListNode createOne() {
-        ListNode head = new ListNode(3);
-        ListNode one = new ListNode(2);
-        ListNode two = new ListNode(0);
-        ListNode three = new ListNode(-4);
-        head.next = one;
-        one.next = two;
-        two.next = three;
-        three.next = one;
-        return head;
-    }
-
-    static ListNode createTwo() {
-        ListNode head = new ListNode(1);
-        ListNode one = new ListNode(2);
-        head.next = one;
-        one.next = head;
-        return head;
-    }
-
-    static ListNode createNoCycleListNode() {
-        ListNode head = new ListNode(1);
-        return head;
-    }
-
-    static ListNode createNoCycleListNodeForNull() {
-        return null;
     }
 
     @ParameterizedTest(name = "hasCycleSet测试有环的链表返回false: Test# {index}: Id: {0}")
