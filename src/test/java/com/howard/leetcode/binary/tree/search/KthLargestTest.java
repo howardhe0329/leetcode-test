@@ -22,7 +22,6 @@ class KthLargestTest {
         kthLargest = new KthLargest(k, nums);
         resultList.forEach(result -> {
             int kVal = kthLargest.add(result.add);
-            System.out.println(kVal);
             Assertions.assertThat(kVal)
                     .isEqualTo(result.right);
         });

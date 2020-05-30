@@ -28,6 +28,9 @@ public class ListNodeGenerator {
             curr.next = new ListNode(data.get(i));
             curr = curr.next;
         }
+        if (pos == data.size() - 1) {
+            cycle = curr;
+        }
         curr.next = cycle;
         return head;
     }

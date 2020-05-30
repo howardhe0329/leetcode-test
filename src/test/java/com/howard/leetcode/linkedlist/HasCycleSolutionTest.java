@@ -52,11 +52,4 @@ class HasCycleSolutionTest {
         Assertions.assertThat(result).as("有环的链表").isTrue();
     }
 
-    @ParameterizedTest(name = "no_hasCycleSet测试无环的链表返回false: Test# {index}: Id: {0}")
-    @MethodSource("noCycleListNode")
-    @DisplayName("测试无环的链表")
-    void no_hasCycleSet(ListNode head) {
-        boolean result = solution.hasCycle(head);
-        Assertions.assertThat(result).as("无环的链表").isFalse();
-    }
 }

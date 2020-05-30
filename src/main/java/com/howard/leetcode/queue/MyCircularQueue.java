@@ -1,8 +1,5 @@
 package com.howard.leetcode.queue;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * 循环队列
  *
@@ -11,65 +8,72 @@ import java.util.List;
  */
 public class MyCircularQueue {
 
-    private int[] data;
+    private int[] items;
     private int head;
     private int tail;
-    private int length;
+    private int count;
 
+    /**
+     * Initialize your data structure here. Set the size of the queue to be k.
+     */
     public MyCircularQueue(int k) {
-        if (k <= 0) {
-            throw new IllegalArgumentException("参数无效");
-        }
-        data = new int[k];
-        length = k;
-        head = -1;
-        tail = -1;
+        if (k < 0) return;
+        items = new int[k];
+        this.count = k;
+        this.head = -1;
+        this.tail = -1;
     }
 
-    public int Front() {
-        if (isEmpty()) {
-            return -1;
-        }
-        return data[head];
-    }
-
-    public int Rear() {
-        if (isEmpty()) {
-            return -1;
-        }
-        return data[tail];
-    }
-
+    /**
+     * Insert an element into the circular queue. Return true if the operation is successful.
+     */
     public boolean enQueue(int value) {
-        if (isFull()) {
-            return false;
-        }
-        if (isEmpty()) {
-            head = 0;
-        }
-        tail = (tail + 1) % length;
-        data[tail] = value;
+        if (isFull()) return false;
+        if (isEmpty()) head = 0;
+        tail = (tail + 1) % count;
+        items[tail] = value;
         return true;
     }
 
+    /**
+     * Delete an element from the circular queue. Return true if the operation is successful.
+     */
     public boolean deQueue() {
-        if (isEmpty()) {
-            return false;
-        }
+        if (isEmpty()) return false;
         if (head == tail) {
             head = -1;
             tail = -1;
-        } else {
-            head = (head + 1) % length;
+            return true;
         }
+        head = (head + 1) % count;
         return true;
     }
 
+    /**
+     * Get the front item from the queue.
+     */
+    public int Front() {
+        return isEmpty() ? -1 : items[head];
+    }
+
+    /**
+     * Get the last item from the queue.
+     */
+    public int Rear() {
+        return isEmpty() ? -1 : items[tail];
+    }
+
+    /**
+     * Checks whether the circular queue is empty or not.
+     */
     public boolean isEmpty() {
         return head == -1;
     }
 
+    /**
+     * Checks whether the circular queue is full or not.
+     */
     public boolean isFull() {
-        return (tail + 1) % length == head;
+        return (tail + 1) % count == head;
     }
 }

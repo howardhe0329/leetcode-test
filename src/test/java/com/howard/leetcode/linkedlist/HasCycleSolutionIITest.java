@@ -1,6 +1,7 @@
 package com.howard.leetcode.linkedlist;
 
 import org.assertj.core.api.Assertions;
+import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -8,6 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 @DisplayName("有环的链表的环的起点节点")
@@ -27,67 +29,22 @@ class HasCycleSolutionIITest {
     @ParameterizedTest(name = "detectCycle测试有环的链表返回ListNode: Test# {index}: Id: {0}")
     @DisplayName("测试有环的链表的环起点节点")
     @MethodSource("hasCycleListNodeProvider")
-    void detectCycle(ListNode head) {
-        ListNode result = solution.detectCycle(head);
-        Assertions.assertThat(result).as("不为null").isNotNull();
-    }
-
-    @ParameterizedTest(name = "detectCycle测试无环的链表返回null: Test# {index}: Id: {0}")
-    @DisplayName("测试无环的链表的情况")
-    @MethodSource("no_hasCycleListNodeProvider")
-    void detectCycle_no_cycle(ListNode head) {
-        ListNode result = solution.detectCycle(head);
-        Assertions.assertThat(result).as("为null").isNull();
+    void detectCycle(List<Integer> data, int pos, int right) {
+        ListNode result = solution.detectCycle(ListNodeGenerator.generateCycle(data, pos));
+        if (data.isEmpty() || pos < 0) {
+            Assertions.assertThat(result).isNull();
+        } else {
+            Assertions.assertThat(result.val).isEqualTo(right);
+        }
     }
 
     static Stream<Arguments> hasCycleListNodeProvider() {
         return Stream.of(
-          Arguments.arguments(createOne()),
-                Arguments.arguments(createTwo())
+          Arguments.arguments(Lists.newArrayList(3, 2, 0, -4), 1, 2),
+                Arguments.arguments(Lists.newArrayList(), 0, 0),
+                Arguments.arguments(Lists.newArrayList(1, 2), 0, 1),
+                Arguments.arguments(Lists.newArrayList(1), -1, 1)
         );
     }
 
-    static ListNode createOne() {
-        ListNode head = new ListNode(3);
-        ListNode one = new ListNode(2);
-        ListNode two = new ListNode(0);
-        ListNode three = new ListNode(-4);
-        head.next = one;
-        one.next = two;
-        two.next = three;
-        three.next = one;
-        return head;
-    }
-
-    static ListNode createTwo() {
-        ListNode head = new ListNode(1);
-        ListNode one = new ListNode(2);
-        head.next = one;
-        one.next = head;
-        return head;
-    }
-
-    static Stream<Arguments> no_hasCycleListNodeProvider() {
-        return Stream.of(
-                Arguments.arguments(createNoCycleListNode()),
-                Arguments.arguments(createNoCycleListNode1()),
-                Arguments.arguments(createNoCycleListNodeForNull())
-        );
-    }
-
-    static ListNode createNoCycleListNode() {
-        ListNode head = new ListNode(1);
-        return head;
-    }
-
-    static ListNode createNoCycleListNode1() {
-        ListNode head = new ListNode(1);
-        ListNode one = new ListNode(2);
-        head.next = one;
-        return head;
-    }
-
-    static ListNode createNoCycleListNodeForNull() {
-        return null;
-    }
 }
