@@ -1,5 +1,6 @@
 package com.howard.leetcode.linkedlist;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -56,6 +57,13 @@ public class HasCycleSolution {
             node = node.next;
         }
         return false;
+    }
+
+    public static void main(String[] args) {
+        HasCycleSolution solution = new HasCycleSolution();
+        ListNode head = ListNodeGenerator.generateCycle(Arrays.asList(1, 2, 3, 4), 2);
+        boolean res = solution.hasCycle(head);
+        System.out.println(res);
     }
 
 }

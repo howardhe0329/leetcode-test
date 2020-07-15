@@ -1,7 +1,6 @@
 package com.howard.leetcode.binary.tree;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * 后序遍历二叉树实现
@@ -44,5 +43,28 @@ public class PostorderTraversalSolution {
         postorder(root.right, resultList);
         // 3. 最后访问根节点
         resultList.add(root.val);
+    }
+
+    public List<Integer> postorderTraversal1(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        stack.add(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            if (node != null) {
+                result.add(node.val);
+                if (node.left != null) stack.add(node.left);
+                if (node.right != null) stack.add(node.right);
+            }
+        }
+        Collections.reverse(result);
+        return result;
+    }
+
+    public static void main(String[] args) {
+        PostorderTraversalSolution solution = new PostorderTraversalSolution();
+        TreeNode root = TreeNodeGenerator.generate(Arrays.asList(1, null, 2, 3));
+        List<Integer> res = solution.postorderTraversal1(root);
+        System.out.println(res);
     }
 }

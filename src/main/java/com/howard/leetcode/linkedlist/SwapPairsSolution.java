@@ -1,5 +1,7 @@
 package com.howard.leetcode.linkedlist;
 
+import java.util.Arrays;
+
 /**
  * 两两交换链表中的节点
  *
@@ -33,4 +35,12 @@ public class SwapPairsSolution {
         }
         return dummy.next;
     }
+
+    public static void main(String[] args) {
+        SwapPairsSolution solution = new SwapPairsSolution();
+        ListNode head = ListNodeGenerator.generate(Arrays.asList(1, 2, 3, 4));
+        ListNode res = solution.swapPairs(head);
+        System.out.println(res);
+    }
+
 }

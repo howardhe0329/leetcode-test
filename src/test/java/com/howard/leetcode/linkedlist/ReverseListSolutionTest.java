@@ -36,8 +36,8 @@ class ReverseListSolutionTest {
     @ParameterizedTest
     @MethodSource("createLiisNodeProvider")
     @DisplayName("反转链表递归法测试")
-    void reverseListRecurisve(List<Integer> data, List<Integer> rightList) {
-        ListNode result = solution.reverseListRecurisve(ListNodeGenerator.generate(data));
+    void reverseListRecursive(List<Integer> data, List<Integer> rightList) {
+        ListNode result = solution.reverseListRecursive(ListNodeGenerator.generate(data));
         if (rightList.isEmpty()) {
             Assertions.assertThat(result).isNull();
         } else {

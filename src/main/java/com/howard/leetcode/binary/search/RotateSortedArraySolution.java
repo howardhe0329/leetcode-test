@@ -53,34 +53,46 @@ public class RotateSortedArraySolution {
     }
 
     public int search(int[] nums, int target) {
+        if (nums == null || nums.length == 0) return -1;
         int lo = 0;
         int hi = nums.length - 1;
-        // 找出数组中的最大值
+        // 找出数组中的最小值
         while (lo < hi) {
             int mid = lo + ((hi - lo) >> 1);
-            if (nums[mid] < nums[lo]) {
-                hi = mid - 1;
-            } else {
-                lo = mid;
-            }
-        }
-        int n = nums.length;
-        int bias = (lo + n) - (n - 1);
-        lo = 0;
-        hi = nums.length - 1;
-        while (lo <= hi) {
-            int mid = lo + ((hi - lo) >> 1);
-            int mid_change = (mid + bias) % nums.length;
-            int value = nums[mid_change];
-            if (target == value) {
-                return mid_change;
-            }
-            if (target < value) {
-                hi = mid - 1;
+            if (nums[mid] < nums[hi]) {
+                hi = mid;
             } else {
                 lo = mid + 1;
             }
         }
+        int bias = lo;
+        lo = 0;
+        hi = nums.length - 1;
+        while (lo <= hi) {
+            int mid = lo + ((hi - lo) >> 1);
+            int realMid = (mid + bias) % nums.length;
+            if (target == nums[realMid])
+                return realMid;
+            else if (target < nums[realMid])
+                hi = mid - 1;
+            else
+                lo = mid + 1;
+        }
         return -1;
+    }
+
+    public static void main(String[] args) {
+        RotateSortedArraySolution solution = new RotateSortedArraySolution();
+        int[] nums = new int[]{5, 1, 3};
+        int res = solution.search(nums, 5);
+        System.out.println(res);
+
+        nums = new int[]{4, 5, 6, 7, 0, 1, 2};
+        res = solution.search(nums, 0);
+        System.out.println(res);
+
+        nums = new int[]{4, 5, 6, 7, 0, 1, 2};
+        res = solution.search(nums, 3);
+        System.out.println(res);
     }
 }

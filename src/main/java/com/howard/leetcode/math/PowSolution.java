@@ -47,8 +47,18 @@ public class PowSolution {
         return result;
     }
 
+    private double fastPow(double x, long n) {
+        if (n == 0) return 1.0;
+        double half = fastPow(x, n >>> 1);
+        if ((n & 1) == 1)
+            return half * half * x;
+        else
+            return half * half;
+    }
+
     public static void main(String[] args) {
-        System.out.println(10 & 1);
-        System.out.println(9 & 1);
+        PowSolution solution = new PowSolution();
+        double res = solution.myPow(2, Integer.MIN_VALUE);
+        System.out.println(res);
     }
 }

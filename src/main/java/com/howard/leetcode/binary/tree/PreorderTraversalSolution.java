@@ -1,7 +1,9 @@
 package com.howard.leetcode.binary.tree;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * 前序遍历二叉树实现
@@ -41,6 +43,29 @@ public class PreorderTraversalSolution {
         resultList.add(root.val);
         preorder(root.left, resultList);
         preorder(root.right, resultList);
+    }
+
+    public List<Integer> preorderTraversal1(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null) return result;
+        Stack<TreeNode> stack = new Stack<>();
+        stack.add(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            if (node != null) {
+                result.add(node.val);
+                if (node.right != null) stack.add(node.right);
+                if (node.left != null) stack.add(node.left);
+            }
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        PreorderTraversalSolution solution = new PreorderTraversalSolution();
+        TreeNode root = TreeNodeGenerator.generate(Arrays.asList(1, null, 2, 3));
+        List<Integer> res = solution.preorderTraversal1(root);
+        System.out.println(res);
     }
 
 }

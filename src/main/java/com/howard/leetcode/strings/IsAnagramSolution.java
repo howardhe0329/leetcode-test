@@ -1,7 +1,9 @@
 package com.howard.leetcode.strings;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 有效的字母异位词
@@ -62,7 +64,25 @@ public class IsAnagramSolution {
     }
 
     public static void main(String[] args) {
-        System.out.println("中国".codePointAt(0));
+        System.out.println("中国".charAt(0));
         System.out.println("a".codePointAt(0));
+
+        IsAnagramSolution solution = new IsAnagramSolution();
+        String s = "anagram";
+        String t = "nagaram";
+        boolean res = solution.isAnagram(s, t);
+        System.out.println(res);
+
+        s = "rat";
+        t = "car";
+        res = solution.isAnagram(s, t);
+        System.out.println(res);
+
+        s = "中花人民";
+        t = "民中花人在";
+        res = solution.isAnagram(s, t);
+        System.out.println(res);
+
+
     }
 }

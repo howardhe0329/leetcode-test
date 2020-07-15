@@ -1,5 +1,7 @@
 package com.howard.leetcode.eighteen.arrays;
 
+import java.util.Arrays;
+
 /**
  * Rotate Array
  * <p>
@@ -51,10 +53,8 @@ public class Solution189 {
     private void reverse(int[] nums, int left, int right) {
         while (left < right) {
             int temp = nums[left];
-            nums[left] = nums[right];
-            nums[right] = temp;
-            left ++;
-            right --;
+            nums[left++] = nums[right];
+            nums[right--] = temp;
         }
     }
 
@@ -69,22 +69,18 @@ public class Solution189 {
      * @param k
      */
     public void rotate2(int[] nums, int k) {
-        if (nums == null || nums.length == 0 || (k = k % nums.length) == 0) {
-            return;
-        }
-        // times 遍历次数
-        int times = 0;
-        for (int start = 0; times < nums.length; start++) {
-            int current = start;
-            int prev = nums[start];
+        if (nums == null || nums.length == 0 || (k = (k % nums.length)) == 0) return;
+        int times = 0, start = 0;
+        while (times < nums.length) {
+            int index = start;
             do {
-                int next = (current + k) % nums.length;
-                int temp = nums[next];
-                nums[next] = prev;
-                prev = temp;
-                current = next;
-                times ++;
-            } while (start != current);
+                index = (index + k) % nums.length;
+                int temp = nums[index];
+                nums[index] = nums[start];
+                nums[start] = temp;
+                times++;
+            } while (index != start);
+            start++;
         }
     }
 
@@ -106,5 +102,16 @@ public class Solution189 {
         for (int i = 0; i < result.length; i++) {
             nums[i] = result[i];
         }
+    }
+
+    public static void main(String[] args) {
+        Solution189 solution189 = new Solution189();
+        int[] nums = new int[]{1, 2, 3, 4, 5, 6, 7};
+        solution189.rotate(nums, 3);
+        System.out.println(Arrays.toString(nums));
+
+        nums = new int[]{-1, -100, 3, 99};
+        solution189.rotate(nums, 2);
+        System.out.println(Arrays.toString(nums));
     }
 }
