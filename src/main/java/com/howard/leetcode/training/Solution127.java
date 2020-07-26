@@ -52,8 +52,8 @@ public class Solution127 {
             for (String word : beginSet) {
                 char[] chars = word.toCharArray();
                 for (int i = 0; i < chars.length; i++) {
+                    char old = chars[i];
                     for (char c = 'a'; c <= 'z'; c++) {
-                        char old = chars[i];
                         chars[i] = c;
                         String target = String.valueOf(chars);
                         if (endSet.contains(target)) {
@@ -63,8 +63,8 @@ public class Solution127 {
                             temp.add(target);
                             visited.add(target);
                         }
-                        chars[i] = old;
                     }
+                    chars[i] = old;
                 }
             }
             beginSet = temp;

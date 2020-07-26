@@ -4,12 +4,12 @@ package com.howard.leetcode.training;
 public class Solution121 {
 
     public int maxProfit(int[] prices) {
-        int maxProfit = 0;
-        for (int i = 0; i < prices.length - 1; i++) {
-
-            maxProfit = Math.max(maxProfit, prices[i + 1] - prices[i]);
+        int buy = Integer.MAX_VALUE, profit = 0;
+        for (int price : prices) {
+            if (price < buy) buy = price;
+            else profit = Math.max(profit, price - buy);
         }
-        return maxProfit;
+        return profit;
     }
 
     public static void main(String[] args) {
